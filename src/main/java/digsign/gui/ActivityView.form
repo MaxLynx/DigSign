@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="digsign.gui.ActivityView">
+  <grid id="27dc6" binding="panel1" layout-manager="GridLayoutManager" row-count="10" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="772" height="400"/>
+    </constraints>
+    <properties>
+      <background color="-2883595"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <vspacer id="7d615">
+        <constraints>
+          <grid row="0" column="0" row-span="10" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="951b7" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Підписати документ"/>
+        </properties>
+      </component>
+      <component id="b2f64" class="javax.swing.JLabel" binding="userLabel">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="5b5b1" class="javax.swing.JLabel" binding="verifyingLabel">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="ec600" class="javax.swing.JButton" binding="button1" default-binding="true">
+        <constraints>
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Обробити документ"/>
+        </properties>
+      </component>
+      <component id="9c069" class="javax.swing.JButton" binding="видалитиКористувачаButton" default-binding="true">
+        <constraints>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Видалити користувача"/>
+        </properties>
+      </component>
+      <component id="8a3d4" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Перевірити електронний підпис"/>
+        </properties>
+      </component>
+      <component id="b5630" class="javax.swing.JButton" binding="завантажитиДокументButton" default-binding="true">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Обробити документ"/>
+        </properties>
+      </component>
+      <component id="1501e" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Ім'я користувача для перевірки:"/>
+        </properties>
+      </component>
+      <component id="b606a" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="John Doe"/>
+        </properties>
+      </component>
+      <component id="2162" class="javax.swing.JButton" binding="вийтиButton" default-binding="true">
+        <constraints>
+          <grid row="7" column="3" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Вийти"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
