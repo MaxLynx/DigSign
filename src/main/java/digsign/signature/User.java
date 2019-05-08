@@ -12,6 +12,15 @@ public class User {
     private KeyPair keyPair;
     private Signature signature;
 
+    public User(){
+        try {
+            this.signature = Signature.getInstance("MD5WithRSA");
+        }
+        catch(NoSuchAlgorithmException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+
     public User(String username, String password){
         this.username = username;
         this.password = password;

@@ -1,10 +1,14 @@
 package digsign.signature;
 
 
+import digsign.dao.DAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
+    private DAO dao = new DAO();
+
     private List<User> users;
     private User currentUser;
 
@@ -12,11 +16,12 @@ public class Model {
     public static String EMPTY_FILE_MARKER = "<EMPTY FILE>";
 
     public Model(){
-        users = new ArrayList<User>();
+        users = dao.loadUsers();
     }
 
     public Model(List<User> users){
         this.users = users;
+        dao.saveUsers(users);
     }
 
     public List<User> getUsers() {
@@ -25,6 +30,7 @@ public class Model {
 
     public void setUsers(List<User> users) {
         this.users = users;
+        dao.saveUsers(users);
     }
 
     public User getCurrentUser() {
@@ -62,10 +68,12 @@ public class Model {
         }
         User newUser = new User(login, password);
         users.add(newUser);
+        dao.saveUsers(users);
         return newUser;
     }
 
     public void removeUser(User user){
         users.remove(user);
+        dao.saveUsers(users);
     }
 }

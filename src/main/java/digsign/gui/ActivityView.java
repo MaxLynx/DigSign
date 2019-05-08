@@ -52,15 +52,20 @@ public class ActivityView extends JFrame {
                     } catch (IOException x) {
                         System.err.println(x.getMessage());
                     }
-                    int index = result.indexOf(Model.DIGITAL_SIGNATURE_STARTING_MARKER);
-                    if(controller.verifySignature(textField1.getText(),
-                            result.substring(index + Model.DIGITAL_SIGNATURE_STARTING_MARKER.length()),
-                            result.substring(0, index)
-                    )){
-                        verifyingLabel.setText("Документ був підписаний користувачем " + textField1.getText()
-                                + " та з того часу незмінний");
+                    try {
+                        int index = result.indexOf(Model.DIGITAL_SIGNATURE_STARTING_MARKER);
+                        if (controller.verifySignature(textField1.getText(),
+                                result.substring(index + Model.DIGITAL_SIGNATURE_STARTING_MARKER.length()),
+                                result.substring(0, index)
+                        )) {
+                            verifyingLabel.setText("Документ був підписаний користувачем " + textField1.getText()
+                                    + " та з того часу незмінний");
+                        } else {
+                            verifyingLabel.setText("Документ не був підписаний користувачем " + textField1.getText()
+                                    + " або змінився з моменту підпису");
+                        }
                     }
-                    else{
+                    catch(IndexOutOfBoundsException ex){
                         verifyingLabel.setText("Документ не був підписаний користувачем " + textField1.getText()
                                 + " або змінився з моменту підпису");
                     }
