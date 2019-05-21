@@ -13,6 +13,7 @@ public class Model {
     private User currentUser;
 
     public static String DIGITAL_SIGNATURE_STARTING_MARKER = "<DIG SIGN>";
+    public static String DIGITAL_SIGNATURE_CONTINUATION_MARKER = "<;>";
     public static String EMPTY_FILE_MARKER = "<EMPTY FILE>";
 
     public Model(){

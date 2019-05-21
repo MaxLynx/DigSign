@@ -112,16 +112,20 @@ public class SigningController {
             }
 
             try {
-                String signature = (String)
+                String[] signatures = ((String)
                         text.subSequence(text.indexOf(Model.DIGITAL_SIGNATURE_STARTING_MARKER) +
                                 Model.DIGITAL_SIGNATURE_STARTING_MARKER.length()
-                                , text.length());
+                                , text.length())).split(Model.DIGITAL_SIGNATURE_CONTINUATION_MARKER);
                 String fileText = (String) text.subSequence(0, text.indexOf(Model.DIGITAL_SIGNATURE_STARTING_MARKER));
-                System.out.println(fileText);
+                boolean success = false;
+                for(String signature : signatures){
+                    if (Signing.verifySignature(model.findUserUnsafely(username), signature, fileText)) {
+                        viewModel.put("message", "Документ був підписаний користувачем " + username);
+                        success = true;
+                    }
+                }
 
-                if (Signing.verifySignature(model.findUserUnsafely(username), signature, fileText)) {
-                    viewModel.put("message", "Документ був підписаний користувачем " + username);
-                } else {
+                if(!success) {
                     viewModel.put("message", "Документ не був підписаний користувачем " + username);
                 }
             }
@@ -162,8 +166,15 @@ public class SigningController {
                 viewModel.put("message", "Підписати документ не вдалося :(");
             }
             try (FileWriter fileWriter = new FileWriter(new File(path + file.getOriginalFilename()), false)) {
-                fileWriter.write(text + Model.DIGITAL_SIGNATURE_STARTING_MARKER
-                        + Signing.createSignature(model.getCurrentUser(), text));
+                if(text.contains(Model.DIGITAL_SIGNATURE_STARTING_MARKER)){
+                    String originalText = text.substring(0, text.indexOf(Model.DIGITAL_SIGNATURE_STARTING_MARKER));
+                    fileWriter.write(text + Model.DIGITAL_SIGNATURE_CONTINUATION_MARKER
+                            + Signing.createSignature(model.getCurrentUser(), originalText));
+                }
+                else {
+                    fileWriter.write(text + Model.DIGITAL_SIGNATURE_STARTING_MARKER
+                            + Signing.createSignature(model.getCurrentUser(), text));
+                }
                 viewModel.put("message", "Документ було успішно підписано!");
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
