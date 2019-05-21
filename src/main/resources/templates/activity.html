@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DigSign</title>
+
+    <style type="text/css">
+        body {
+          background: #C0C0C0;
+          background: -webkit-linear-gradient(right, #C0C0C0, #8DC26F);
+          background: -moz-linear-gradient(right, #C0C0C0, #8DC26F);
+          background: -o-linear-gradient(right, #C0C0C0, #8DC26F);
+          background: linear-gradient(to left, #C0C0C0, #8DC26F);
+          font-family: "Roboto", sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+        .form-style-1 {
+            margin:140px 140px 20px 140px;
+            max-width: 400px;
+            padding: 20px 12px 10px 20px;
+            font: 16px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        }
+        .form-style-1 li {
+            padding: 0;
+            display: block;
+            list-style: none;
+            margin: 10px 0 0 0;
+        }
+        .form-style-1 label{
+            margin:0 0 3px 0;
+            padding:0px;
+            display:block;
+            font-weight: bold;
+        }
+        .form-style-1 input[type=text],
+        .form-style-1 input[type=date],
+        .form-style-1 input[type=datetime],
+        .form-style-1 input[type=number],
+        .form-style-1 input[type=search],
+        .form-style-1 input[type=time],
+        .form-style-1 input[type=url],
+        .form-style-1 input[type=email],
+        textarea,
+        select{
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            border:1px solid #BEBEBE;
+            padding: 7px;
+            margin:0px;
+            -webkit-transition: all 0.30s ease-in-out;
+            -moz-transition: all 0.30s ease-in-out;
+            -ms-transition: all 0.30s ease-in-out;
+            -o-transition: all 0.30s ease-in-out;
+            outline: none;
+        }
+        .form-style-1 input[type=text]:focus,
+        .form-style-1 input[type=date]:focus,
+        .form-style-1 input[type=datetime]:focus,
+        .form-style-1 input[type=number]:focus,
+        .form-style-1 input[type=search]:focus,
+        .form-style-1 input[type=time]:focus,
+        .form-style-1 input[type=url]:focus,
+        .form-style-1 input[type=email]:focus,
+        .form-style-1 textarea:focus,
+        .form-style-1 select:focus{
+            -moz-box-shadow: 0 0 8px #88D5E9;
+            -webkit-box-shadow: 0 0 8px #88D5E9;
+            box-shadow: 0 0 8px #88D5E9;
+            border: 1px solid #88D5E9;
+        }
+        .form-style-1 .field-divided{
+            width: 49%;
+        }
+
+        .form-style-1 .field-long{
+            width: 100%;
+        }
+        .form-style-1 .field-select{
+            width: 100%;
+        }
+        .form-style-1 .field-textarea{
+            height: 100px;
+        }
+        .form-style-1 input[type=submit], .form-style-1 input[type=button]{
+            background: #4B99AD;
+            padding: 8px 15px 8px 15px;
+            border: none;
+            color: #fff;
+        }
+        .form-style-1 input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+            background: #4691A4;
+            box-shadow:none;
+            -moz-box-shadow:none;
+            -webkit-box-shadow:none;
+        }
+        .form-style-1 .required{
+            color:red;
+        }
+
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+  font: 15px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+.warning {
+          color: #8b0000;
+          font-weight: bold;
+          vertical-align: middle;
+        }
+@media (max-width: 800px) {
+  .form-inline input {
+    margin: 10px 0;
+  }
+
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+        a {
+          color: white;
+          text-decoration: none;
+        }
+        </style>
+</head>
+<body>
+<form id="user-settings" class="form-inline" th:action="@{/delete}" method="post">
+    <label>Ви увійшли як користувач <span th:text="${currentUsername}"></span></label>
+    <button >Видалити аккаунт</button>
+</form>
+<button><a href="/">Вийти</a></button>
+<br/>
+<form style="float:right;" th:action="@{/verify}" method="post" enctype="multipart/form-data" th:object="${object}">
+
+    <ul class="form-style-1">
+        <li>
+            <h1>Перевірка документу</h1>
+            <br/>
+        </li>
+        <li><label>Ім'я користувача для перевірки<span class="required">*</span></label><input type="text" name="username" class="field-divided" placeholder="John Doe" /> </li>
+        <li>
+            <label>Завантажити файл<span class="required">*</span></label>
+            <input type="file" class="input-file" name="file"/>
+        </li>
+        <li>
+            <input type="submit" value="Перевірити" />
+        </li>
+    </ul>
+</form>
+<form style="float:left;" th:action="@{/sign}" method="post" enctype="multipart/form-data" th:object="${object}">
+
+    <ul class="form-style-1">
+        <li>
+            <h1>Підпис документу</h1>
+            <br/>
+        </li>
+        <li><label>Куди зберегти?<span class="required">*</span></label><input type="text" name="path" value="C:/"
+                                                                               class="field-divided" placeholder="C:/" /> </li>
+        <li>
+            <label>Завантажити файл<span class="required">*</span></label>
+            <input type="file" class="input-file" name="file"/>
+        </li>
+        <li>
+            <input type="submit" value="Підписати" />
+        </li>
+    </ul>
+</form>
+<div class="warning" th:if="${message != null}" th:text="${message}">
+</div>
+</body>
+</html>

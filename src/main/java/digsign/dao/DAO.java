@@ -1,12 +1,15 @@
 package digsign.dao;
 
 
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 import digsign.signature.Signing;
 import digsign.signature.User;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +17,7 @@ import java.security.KeyPair;
 import java.security.Signature;
 import java.security.SignatureException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,42 +25,63 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 
+import com.google.gson.Gson;
+
+import javax.jws.soap.SOAPBinding;
+
 public class DAO {
-    private static String USERDATA_SOURCE_FILENAME = "src\\main\\resources\\userdata.txt";
+    private static String USERDATA_SOURCE_FILENAME = "src\\main\\resources\\userdata.json";
 
     public DAO(){
 
     }
 
     public List<User> loadUsers(){
+
         List<User> users = new ArrayList<User>();
 
-        String[] userdata = getFileAsString(USERDATA_SOURCE_FILENAME).split("\t");
-        for (String line:
-             userdata) {
-                String[] fields = line.split(" ");
-                if(fields.length == 3) {
-                    User user = new User();
-                    user.setUsername(fields[0]);
-                    user.setPassword((String) deserialize(fields[1]));
-                    user.setKeyPair((KeyPair) deserialize(fields[2]));
-                    users.add(user);
-                }
+        try {
+            FileReader reader = new FileReader(USERDATA_SOURCE_FILENAME);
 
+            Type colType = new TypeToken<List<PrivateData>>(){}.getType();
+            List<PrivateData> userdata = new Gson().fromJson(reader, colType);
+            reader.close();
+            for (PrivateData line :
+                    userdata) {
+                    User user = new User();
+                    user.setUsername(line.getUsername());
+                    user.setPassword((String) deserialize(line.getPassword()));
+                    user.setKeyPair((KeyPair) deserialize(line.getKeys()));
+                    users.add(user);
+
+
+            }
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
         }
 
         return users;
     }
 
     public void saveUsers(List<User> users){
-        String userdata = "";
+        List<PrivateData> privateData = new ArrayList<>();
         for(User user:
                 users){
-            userdata += user.getUsername() + " "
-                    + serialize(user.getPassword()) + " "
-                    + serialize(user.getKeyPair()) + "\t";
+
+            privateData.add(new PrivateData(user.getUsername(),
+                    serialize(user.getPassword()),
+                    serialize(user.getKeyPair())));
         }
-        getStringAsFile(userdata, USERDATA_SOURCE_FILENAME);
+        try {
+            Writer writer = new FileWriter(USERDATA_SOURCE_FILENAME);
+            new Gson().toJson(privateData, writer);
+            writer.flush();
+            writer.close();
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     private static String serialize(Object object){
